@@ -1,0 +1,59 @@
+NOTAS IMPORTANTES !!
+
+Asegurese de tener conocimientos de los siguientes temas:
+
+- Administración de Linux.
+- Virtualización en Linux con kvm/qemu/libvirt.
+- LinuxBridge y OpenVSwitch.
+- Linux NameSpaces.
+- Redes en general.
+- OpenStack.
+- NFS, GlusterFS.
+- Instalación "correcta" de Centos 6.
+
+Este instalador es SOLAMENTE para CENTOS 6 / SL6 / RHEL 6 de 64 bits (x86_64 / amd64). No intente usarlo en otro ambiente.
+
+1.- Repositorios:
+
+Asegurese de tener los repositorios de centos, epel y openstack-rdo:
+
+yum -y install http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+yum -y install http://repos.fedorapeople.org/repos/openstack/openstack-havana/rdo-release-havana-6.noarch.rpm
+
+NOTA: A veces las versiones del RPM de epel y havana son actualizadas. Si le falla alguno de los comandos de yum descritos
+      anteriormente, consulte las páginas siguientes para verificar el rpm correcto:
+      - http://download.fedoraproject.org/pub/epel/6/x86_64/
+      - http://repos.fedorapeople.org/repos/openstack/openstack-havana/
+
+2.- Kernel RDO:
+
+Luego de instalar los repositorios RDO y EPEL, ejecute un "yum -y update" para actualizar el S/O e incluir el kernel RDO con soporte de "namespaces".
+
+yum -y update
+
+NOTA: Deberá reiniciar el servidor para que arranque con el nuevo kernel.
+
+
+3.- OpenVSWITCH:
+
+Instale openvswitch y cree sus bridges. Ejecute los comandos a continuación (luego de colocar los repositorios indicados anteriormente):
+
+yum -y install openvswitch
+
+service openvswitch start
+
+chkconfig openvswitch on
+
+Creee el switch de integración:
+
+ovs-vsctl add-br br-int
+
+Luego cree el switch para la (o las) red(es) de OpenStack. Ejemplo para br-eth1 (suponiendo que eth1 va a ser la interfaz dedicada para OpenStack):
+
+ovs-vsctl add-br br-eth1
+ovs-vsctl add-port br-eth1 eth1
+
+
+NOTA: Trate siempre de usar una interfaz que esté LIBRE y pueda ser "dedicada" para OpenStack. Para otras configuraciones, consulte la información que está disponible en Internet. No es necesario colocar las interfaces asociadas a los switches en /etc/sysconfig/network-scripts/, a menos que las tenga "compartidas" y no dedicadas para OpenStack.
+
+

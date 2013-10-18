@@ -1,0 +1,13 @@
+1.0.2 RC1 - 17-Octubre-2013
+- Cambios adicionales en módulo de instalación y configuración
+  de ceilometer.
+
+1.0.1 RC1 - 17-Octubre-2013
+- Se cambia la lógica para agregar configuración de ceilometer
+  en nova para poder tener dos lineas de notification_driver
+
+1.0.0 RC1 - Versión Inicial - 17-Octubre-2013
+- Se prueba esta versión con los paquetes RC1 de OpenStack (RDO).
+- Cambios en todos los módulos para ajustarlos a "neutron".
+- Cambios generales para las opciones nuevas en Havana RC1
+

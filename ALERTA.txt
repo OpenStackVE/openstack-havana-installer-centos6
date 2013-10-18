@@ -1,0 +1,17 @@
+NOTA IMPORTANTE !!
+
+Hasta el momento de hacer esta versión del instalador (Octubre 16 2013) hay
+cosas que aun no funcionan en Havana RC1:
+
+1.- La versión disponible en el repo RDP parea RHEL es la RC1. Esta versión
+    aun no funciona del todo bien.
+
+2.- La versión de SWIFT del repositorio aun da algunos problemas y no levanta
+    (ni siquiera instalándola con PackStack).
+
+3.- La versión del plugin LBAAS del repositorio aun presenta problemas y
+    básicamente no funciona.
+
+Por favor no use este software aun en ambientes de producción hasta que la
+versión en el repositorio RDO haya sido migrada a la definitiva y los bugs
+mayores hayan sido resueltos !.
