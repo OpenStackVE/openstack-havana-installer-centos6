@@ -41,15 +41,29 @@ cinder_svc_start='
 
 if [ -f /etc/openstack-control-script-config/neutron-full-installed ]
 then
-	neutron_svc_start='
-		neutron-ovs-cleanup
-		neutron-server
-		neutron-openvswitch-agent
-		neutron-dhcp-agent
-		neutron-l3-agent
-		neutron-lbaas-agent
-		neutron-metadata-agent
-	'
+	if [ -f /etc/openstack-control-script-config/neutron-full-installed-vpnaas ]
+	then
+		neutron_svc_start='
+			neutron-ovs-cleanup
+			neutron-openvswitch-agent
+			neutron-dhcp-agent
+			neutron-l3-agent
+			neutron-lbaas-agent
+			neutron-metadata-agent
+			neutron-vpn-agent
+			neutron-server
+		'
+	else
+		neutron_svc_start='
+			neutron-ovs-cleanup
+			neutron-openvswitch-agent
+			neutron-dhcp-agent
+			neutron-l3-agent
+			neutron-lbaas-agent
+			neutron-metadata-agent
+			neutron-server
+		'
+	fi
 else
 	neutron_svc_start='
 		neutron-ovs-cleanup

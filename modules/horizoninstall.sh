@@ -85,6 +85,13 @@ sed -r -i "s/CUSTOM_DASHBOARD_keystonehost/$keystonehost/" /etc/openstack-dashbo
 sed -r -i "s/CUSTOM_DASHBOARD_SERVICE_TOKEN/$SERVICE_TOKEN/" /etc/openstack-dashboard/local_settings
 sed -r -i "s/CUSTOM_DASHBOARD_keystonememberrole/$keystonememberrole/" /etc/openstack-dashboard/local_settings
 
+if [ $vpnaasinstall == "yes" ]
+then
+	sed -r -i "s/VPNAAS_INSTALL_BOOL/True/" /etc/openstack-dashboard/local_settings
+else
+	sed -r -i "s/VPNAAS_INSTALL_BOOL/False/" /etc/openstack-dashboard/local_settings
+fi
+
 sync
 sleep 5
 sync
@@ -130,10 +137,10 @@ then
 		;;
 	esac
 
-	echo "yes"|/usr/share/openstack-dashboard/manage.py syncdb
-	echo "yes"|/usr/share/openstack-dashboard/manage.py syncdb
+	/usr/share/openstack-dashboard/manage.py syncdb --noinput
+	/usr/share/openstack-dashboard/manage.py createsuperuser --username=root --email=root@localhost.tld --noinput
 	mkdir -p /var/lib/dash/.blackhole
-	echo "yes"|/usr/share/openstack-dashboard/manage.py syncdb
+	/usr/share/openstack-dashboard/manage.py syncdb --noinput
 else
 	echo "" >> /etc/openstack-dashboard/local_settings
 	echo "CACHES = {" >> /etc/openstack-dashboard/local_settings

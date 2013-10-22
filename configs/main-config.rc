@@ -6,8 +6,8 @@
 # Octubre del 2013
 #
 # Archivo de configuracion principal
-# Para el instalador versión 1.0.3 "Mr. Cat"
-# Octubre 21, 2013
+# Para el instalador versión 1.0.4 "Mr. Cat"
+# Octubre 22, 2013
 #
 
 #
@@ -284,6 +284,10 @@ dnsmasq_config_file="/etc/dnsmasq-neutron.conf"
 # network_create_list="publica privada externa interna"
 network_create="yes"
 network_create_list="publica"
+#
+# Nuevo para HAVANA: VPNaaS (VPN as a Service)
+# Por defecto, no lo instalamos - coloque "yes" si lo quiere instalar
+vpnaasinstall="no"
 
 
 

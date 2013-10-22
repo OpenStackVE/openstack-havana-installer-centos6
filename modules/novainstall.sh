@@ -122,17 +122,13 @@ then
 	openstack-config --set /etc/nova/api-paste.ini filter:authtoken auth_uri http://$keystonehost:5000/v2.0/
 fi
 
-#
-# Aparentemente ya no son necesarias (se usan en el api-paste) - se comentan por lo pronto...
-# a la espera de confirmación.
-#
-# openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_host $keystonehost
-# openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_port 35357
-# openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_protocol http
-# openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_tenant_name $keystoneservicestenant
-# openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_user $novauser
-# openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_password $novapass
-# openstack-config --set /etc/nova/nova.conf keystone_authtoken signing_dir /tmp/keystone-signing-nova
+openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_host $keystonehost
+openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_port 35357
+openstack-config --set /etc/nova/nova.conf keystone_authtoken auth_protocol http
+openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_tenant_name $keystoneservicestenant
+openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_user $novauser
+openstack-config --set /etc/nova/nova.conf keystone_authtoken admin_password $novapass
+openstack-config --set /etc/nova/nova.conf keystone_authtoken signing_dir /tmp/keystone-signing-nova
 
 
 #

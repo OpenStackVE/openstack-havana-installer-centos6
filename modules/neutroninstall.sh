@@ -61,7 +61,16 @@ fi
 
 echo "Instalando Paquetes para NEUTRON"
 
-yum install -y openstack-neutron openstack-neutron-openvswitch openstack-utils openstack-selinux haproxy
+yum install -y openstack-neutron \
+	openstack-neutron-openvswitch \
+	openstack-utils \
+	openstack-selinux \
+	haproxy
+
+if [ $vpnaasinstall == "yes" ]
+then
+	yum install -y openstack-neutron-vpn-agent openswan
+fi
 
 cat ./libs/openstack-config > /usr/bin/openstack-config
 
@@ -180,12 +189,30 @@ openstack-config --set /etc/neutron/neutron.conf keystone_authtoken auth_protoco
 # openstack-config --set /etc/neutron/neutron.conf service_providers service_provider LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
 # Mientras, se deja el anterior basado en "service_plugins"
 
-openstack-config --set /etc/neutron/neutron.conf DEFAULT service_plugins "neutron.services.loadbalancer.plugin.LoadBalancerPlugin,neutron.services.firewall.fwaas_plugin.FirewallPlugin"
+if [ $vpnaasinstall == "yes" ]
+then
+	openstack-config --set /etc/neutron/neutron.conf DEFAULT service_plugins "neutron.services.loadbalancer.plugin.LoadBalancerPlugin,neutron.services.firewall.fwaas_plugin.FirewallPlugin,neutron.services.vpn.plugin.VPNDriverPlugin"
+else
+	openstack-config --set /etc/neutron/neutron.conf DEFAULT service_plugins "neutron.services.loadbalancer.plugin.LoadBalancerPlugin,neutron.services.firewall.fwaas_plugin.FirewallPlugin"
+fi
 
 # NUEVO: Firewal As A Service
 
 openstack-config --set /etc/neutron/neutron.conf fwaas driver  "neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver"
 openstack-config --set /etc/neutron/neutron.conf fwaas enabled True
+
+# NUEVO: VPN As A Service
+
+if [ $vpnaasinstall == "yes" ]
+then
+	openstack-config --set /etc/neutron/vpn_agent.ini DEFAULT debug False
+	openstack-config --set /etc/neutron/vpn_agent.ini DEFAULT interface_driver "neutron.agent.linux.interface.OVSInterfaceDriver"
+	openstack-config --set /etc/neutron/vpn_agent.ini DEFAULT ovs_use_veth True
+	openstack-config --set /etc/neutron/vpn_agent.ini DEFAULT use_namespaces True
+	openstack-config --set /etc/neutron/vpn_agent.ini DEFAULT external_network_bridge ""
+	openstack-config --set /etc/neutron/vpn_agent.ini vpnagent vpn_device_driver "neutron.services.vpn.device_drivers.ipsec.OpenSwanDriver"
+	openstack-config --set /etc/neutron/vpn_agent.ini ipsec ipsec_status_check_interval 60
+fi
 
 
 sync
@@ -362,6 +389,12 @@ then
 	service neutron-metadata-agent stop
 	chkconfig neutron-metadata-agent off
 
+	if [ $vpnaasinstall == "yes" ]
+	then
+		service neutron-vpn-agent stop
+		chkconfig neutron-vpn-agent off
+	fi
+
 	service neutron-openvswitch-agent start
 	chkconfig neutron-openvswitch-agent on
 else 
@@ -381,6 +414,12 @@ else
 
 	service neutron-metadata-agent start
 	chkconfig neutron-metadata-agent on
+
+	if [ $vpnaasinstall == "yes" ]
+	then
+		service neutron-vpn-agent start
+		chkconfig neutron-vpn-agent on
+	fi
 
 	service neutron-openvswitch-agent start
 	chkconfig neutron-openvswitch-agent on
@@ -438,6 +477,10 @@ else
 	if [ $neutron_in_compute_node == "no" ]
 	then
 		date > /etc/openstack-control-script-config/neutron-full-installed
+		if [ $vpnaasinstall == "yes" ]
+		then
+			date > /etc/openstack-control-script-config/neutron-full-installed-vpnaas
+		fi
 	fi
 fi
 

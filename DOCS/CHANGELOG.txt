@@ -1,3 +1,12 @@
+1.0.4 - 22-Octubre-2013
+- Se corrige el procedimiento de inicialización de la base de
+  datos del Dashboard en el módulo de instalación de Horizon.
+- Se incluye el servicio vpnaas en el módulo de instalación de
+  neutron. La instalación es opcional (controlable vía config
+  del instalador).
+- Se incluyen datos de autenticación extra para nova en el
+  módulo de instalación de nova.
+
 1.0.3 - 21-Octubre-2013
 - Primer release de producción del instalador.
 - Basado en versión de producción (no RC) publicada en RDO.
