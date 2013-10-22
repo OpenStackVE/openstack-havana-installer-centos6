@@ -7,8 +7,8 @@
 # Primera versión para Havana (centos): Octubre 17 del 2013
 #
 # Script principal
-# Versión 1.0.2 RC1 "Mr. Cat"
-# 17 de Octubre del 2013
+# Versión 1.0.3 "Mr. Cat"
+# 21 de Octubre del 2013
 #
 
 PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
@@ -21,6 +21,10 @@ case $1 in
 		source ./configs/main-config.rc
 		mkdir -p /etc/openstack-control-script-config
 		date > /etc/openstack-control-script-config/install-init-date-and-time
+		# Nuevo - Fix de permisologías y modos
+		chown -R root.root *
+		find . -name "*" -type f -exec chmod 644 "{}" ";"
+		find . -name "*.sh" -type f -exec chmod 755 "{}" ";"
 	else
 		echo "No puedo acceder a mi archivo de configuración"
 		echo "Revise que esté ejecutando el instalador en su directorio"
@@ -36,7 +40,7 @@ case $1 in
 	echo "Para releases 6.4 en adelante"
 	echo "Realizado por Reynaldo R. Martinez P."
 	echo "E-Mail: TigerLinux@Gmail.com"
-	echo "Versión 1.0.2 RC1 \"Mr. Cat\" - Octubre 17, 2013"
+	echo "Versión 1.0.3 \"Mr. Cat\" - Octubre 21, 2013"
 	echo ""
 	echo "Se verificaran los prerequisitos"
 	echo "Si alguno de los prerequisitos falla, se informará y se detendrá el proceso"

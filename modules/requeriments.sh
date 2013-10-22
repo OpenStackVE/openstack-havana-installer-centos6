@@ -60,10 +60,12 @@ service ksm restart
 service ksmtuned restart
 service tuned restart
 
-tar -xzvf ./libs/sqlalchemy-migrate-0.7.2.tar.gz -C /usr/local/src/
-cd /usr/local/src/sqlalchemy-migrate-0.7.2/
-python ./setup.py install
-cd -
+#
+# Ya esto no es necesario
+#tar -xzvf ./libs/sqlalchemy-migrate-0.7.2.tar.gz -C /usr/local/src/
+#cd /usr/local/src/sqlalchemy-migrate-0.7.2/
+#python ./setup.py install
+#cd -
 
 testlibvirt=`rpm -qi libvirt|grep -ci "is not installed"`
 

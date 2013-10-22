@@ -1,3 +1,14 @@
+1.0.3 - 21-Octubre-2013
+- Primer release de producción del instalador.
+- Basado en versión de producción (no RC) publicada en RDO.
+- Se corrige en el módulo de instalación de Neutron las entradas
+  relativas al balanceador de carga (lbaas).
+- Se incluye el servicio fwaas.
+- Se actualiza el archivo de configuración del Dashboard con la
+  nueva versión.
+- Mejoras y correcciones en módulo de instalación de Glance.
+- Correcciones generales en módulo de instalación de Ceilometer.
+
 1.0.2 RC1 - 17-Octubre-2013
 - Cambios adicionales en módulo de instalación y configuración
   de ceilometer.

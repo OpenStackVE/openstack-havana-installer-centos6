@@ -66,10 +66,13 @@ yum install -y openstack-glance openstack-utils openstack-selinux
 
 cat ./libs/openstack-config > /usr/bin/openstack-config
 
-tar -xzvf ./libs/sqlalchemy-migrate-0.7.2.tar.gz -C /usr/local/src/
-cd /usr/local/src/sqlalchemy-migrate-0.7.2/
-python ./setup.py install
-cd -
+#
+# Ya esto no es necesario
+#
+#tar -xzvf ./libs/sqlalchemy-migrate-0.7.2.tar.gz -C /usr/local/src/
+#cd /usr/local/src/sqlalchemy-migrate-0.7.2/
+#python ./setup.py install
+#cd -
 
 echo "Listo"
 echo ""
@@ -267,12 +270,20 @@ then
 	echo ""
 	source $keystone_admin_rc_file
 
+	service openstack-glance-registry restart
+	service openstack-glance-api restart
+
+	sync
+	sleep 10
+	glance image-list
+
 	sync
 	sleep 10
 	sync
 
 	glance image-create --name="Cirros 0.3.1 32 bits" \
 		--disk-format=qcow2 \
+		--is-public true \
 		--container-format bare < ./libs/cirros/cirros-0.3.1-i386-disk.img
 
 	sync
@@ -281,6 +292,7 @@ then
 
 	glance image-create --name="Cirros 0.3.1 64 bits" \
 		--disk-format=qcow2 \
+		--is-public true \
 		--container-format bare < ./libs/cirros/cirros-0.3.1-x86_64-disk.img
 
 	sync

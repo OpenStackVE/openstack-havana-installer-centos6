@@ -122,7 +122,8 @@ openstack-config --set /etc/keystone/keystone.conf auth oauth1 keystone.auth.plu
 
 if [ $ceilometerinstall == yes ]
 then
-	openstack-config --set /etc/keystone/keystone.conf publisher_rpc metering_secret $metering_secret
+	# openstack-config --set /etc/keystone/keystone.conf publisher_rpc metering_secret $metering_secret
+	openstack-config --set /etc/keystone/keystone.conf publisher_rpc metering_secret $SERVICE_TOKEN
 fi
 
 keystone-manage pki_setup --keystone-user keystone --keystone-group keystone

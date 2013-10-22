@@ -114,14 +114,15 @@ openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT host $ceilometerh
 
 openstack-config --del /etc/ceilometer/ceilometer.conf DEFAULT sql_connection
 
-openstack-config --del /etc/ceilometer/ceilometer.conf DEFAULT http_control_exchanges nova
-openstack-config --del /etc/ceilometer/ceilometer.conf DEFAULT http_control_exchanges glance
-openstack-config --del /etc/ceilometer/ceilometer.conf DEFAULT http_control_exchanges neutron
-openstack-config --del /etc/ceilometer/ceilometer.conf DEFAULT http_control_exchanges cinder
-openstack-config --del /etc/ceilometer/ceilometer.conf DEFAULT nova_control_exchange nova
-openstack-config --del /etc/ceilometer/ceilometer.conf DEFAULT glance_control_exchange glance
-openstack-config --del /etc/ceilometer/ceilometer.conf DEFAULT neutron_control_exchange neutron
-openstack-config --del /etc/ceilometer/ceilometer.conf publisher_rpc metering_secret $metering_secret
+openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT http_control_exchanges nova
+openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT http_control_exchanges glance
+openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT http_control_exchanges neutron
+openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT http_control_exchanges cinder
+openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT nova_control_exchange nova
+openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT glance_control_exchange glance
+openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT neutron_control_exchange neutron
+# openstack-config --set /etc/ceilometer/ceilometer.conf publisher_rpc metering_secret $metering_secret
+openstack-config --set /etc/ceilometer/ceilometer.conf publisher_rpc metering_secret $SERVICE_TOKEN
 
 kvm_possible=`grep -E 'svm|vmx' /proc/cpuinfo|uniq|wc -l`
 if [ $kvm_possible == "0" ]
@@ -134,7 +135,8 @@ fi
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT debug false
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT verbose false
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT database_connection "mongodb://$mondbhost:$mondbport/$mondbname"
-openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT metering_secret $metering_secret
+# openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT metering_secret $metering_secret
+# openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT metering_secret $SERVICE_TOKEN
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT log_dir /var/log/ceilometer
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT notification_topics notifications,glance_notifications
 

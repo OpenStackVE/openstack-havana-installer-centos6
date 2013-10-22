@@ -176,7 +176,17 @@ openstack-config --set /etc/neutron/neutron.conf keystone_authtoken auth_port 35
 openstack-config --set /etc/neutron/neutron.conf keystone_authtoken auth_protocol http
 
 # Nuevo token de configuracion para el LBaaS
-openstack-config --set /etc/neutron/neutron.conf service_providers service_provider LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
+# Sin embargo, parece no funcionar - se deja comentado hasta que funcione bien
+# openstack-config --set /etc/neutron/neutron.conf service_providers service_provider LOADBALANCER:Haproxy:neutron.services.loadbalancer.drivers.haproxy.plugin_driver.HaproxyOnHostPluginDriver:default
+# Mientras, se deja el anterior basado en "service_plugins"
+
+openstack-config --set /etc/neutron/neutron.conf DEFAULT service_plugins "neutron.services.loadbalancer.plugin.LoadBalancerPlugin,neutron.services.firewall.fwaas_plugin.FirewallPlugin"
+
+# NUEVO: Firewal As A Service
+
+openstack-config --set /etc/neutron/neutron.conf fwaas driver  "neutron.services.firewall.drivers.linux.iptables_fwaas.IptablesFwaasDriver"
+openstack-config --set /etc/neutron/neutron.conf fwaas enabled True
+
 
 sync
 sleep 2
@@ -270,7 +280,8 @@ sync
 openstack-config --set /etc/neutron/lbaas_agent.ini DEFAULT periodic_interval 10
 openstack-config --set /etc/neutron/lbaas_agent.ini DEFAULT interface_driver neutron.agent.linux.interface.OVSInterfaceDriver
 openstack-config --set /etc/neutron/lbaas_agent.ini DEFAULT ovs_use_veth True
-openstack-config --set /etc/neutron/lbaas_agent.ini DEFAULT device_driver  neutron.services.loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver
+# openstack-config --set /etc/neutron/lbaas_agent.ini DEFAULT device_driver  neutron.plugins.services.agent_loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver
+openstack-config --set /etc/neutron/lbaas_agent.ini DEFAULT device_driver neutron.services.loadbalancer.drivers.haproxy.namespace_driver.HaproxyNSDriver
 openstack-config --set /etc/neutron/lbaas_agent.ini DEFAULT use_namespaces True
 openstack-config --set /etc/neutron/lbaas_agent.ini DEFAULT user_group neutron
 

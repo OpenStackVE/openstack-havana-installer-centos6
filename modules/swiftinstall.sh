@@ -147,10 +147,14 @@ openstack-config --set /etc/swift/swift.conf swift-hash swift_hash_path_suffix $
 # Ya no se necesita ???... esperando confirmación...
 # openstack-config --set /etc/swift/swift.conf swift-hash swift_hash_path_prefix $(openssl rand -hex 10)
 
+swiftworkers=`grep processor.\*: /proc/cpuinfo |wc -l`
 
 openstack-config --set /etc/swift/object-server.conf DEFAULT bind_ip $swifthost
+openstack-config --set /etc/swift/object-server.conf DEFAULT workers $swiftworkers
 openstack-config --set /etc/swift/account-server.conf DEFAULT bind_ip $swifthost
+openstack-config --set /etc/swift/account-server.conf DEFAULT workers $swiftworkers
 openstack-config --set /etc/swift/container-server.conf DEFAULT bind_ip $swifthost
+openstack-config --set /etc/swift/container-server.conf DEFAULT workers $swiftworkers
 
 service openstack-swift-account start
 service openstack-swift-container start
@@ -160,7 +164,8 @@ chkconfig openstack-swift-account on
 chkconfig openstack-swift-container on
 chkconfig openstack-swift-object on
 
-openstack-config --set /etc/swift/proxy-server.conf DEFAULT bind_port 8888
+openstack-config --set /etc/swift/proxy-server.conf DEFAULT bind_port 8080
+openstack-config --set /etc/swift/proxy-server.conf DEFAULT workers $swiftworkers
 openstack-config --set /etc/swift/proxy-server.conf "pipeline:main" pipeline "healthcheck cache authtoken keystoneauth proxy-server"
 openstack-config --set /etc/swift/proxy-server.conf "app:proxy-server" use "egg:swift#proxy"
 openstack-config --set /etc/swift/proxy-server.conf "app:proxy-server" allow_account_management true
@@ -168,7 +173,7 @@ openstack-config --set /etc/swift/proxy-server.conf "app:proxy-server" account_a
 openstack-config --set /etc/swift/proxy-server.conf "filter:keystoneauth" use "egg:swift#keystoneauth"
 openstack-config --set /etc/swift/proxy-server.conf "filter:keystoneauth" operator_roles "Member,admin,swiftoperator"
 openstack-config --set /etc/swift/proxy-server.conf "filter:authtoken" paste.filter_factory "keystoneclient.middleware.auth_token:filter_factory"
-openstack-config --set /etc/swift/proxy-server.conf "filter:authtoken" delay_auth_decision = true
+openstack-config --set /etc/swift/proxy-server.conf "filter:authtoken" delay_auth_decision true
 openstack-config --set /etc/swift/proxy-server.conf "filter:authtoken" admin_token $SERVICE_TOKEN
 openstack-config --set /etc/swift/proxy-server.conf "filter:authtoken" auth_token $SERVICE_TOKEN
 openstack-config --set /etc/swift/proxy-server.conf "filter:authtoken" admin_tenant_name $keystoneservicestenant
