@@ -139,7 +139,14 @@ openstack-config --set /etc/nova/nova.conf DEFAULT notification_driver nova.open
 if [ $ceilometerinstall == "yes" ]
 then
 	openstack-config --set /etc/nova/nova.conf DEFAULT notification_driver ceilometer.compute.nova_notifier
-	sed -r -i 's/ceilometer.compute.nova_notifier/ceilometer.compute.nova_notifier\nnotification_driver\ =\ nova.openstack.common.notifier.rpc_notifier/' /etc/nova/nova.conf
+        case $brokerflavor in
+        "qpid")
+                sed -r -i 's/ceilometer.compute.nova_notifier/ceilometer.compute.nova_notifier\nnotification_driver\ =\ nova.openstack.common.notifier.rpc_notifier/' /etc/nova/nova.conf
+                ;;
+        "rabbitmq")
+                sed -r -i 's/ceilometer.compute.nova_notifier/ceilometer.compute.nova_notifier\nnotification_driver\ =\ nova.openstack.common.notifier.rabbit_notifier/' /etc/nova/nova.conf
+                ;;
+        esac
 	openstack-config --set /etc/nova/nova.conf DEFAULT instance_usage_audit True
 	openstack-config --set /etc/nova/nova.conf DEFAULT instance_usage_audit_period hour
 	openstack-config --set /etc/nova/nova.conf DEFAULT notify_on_state_change vm_and_task_state

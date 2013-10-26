@@ -1,3 +1,8 @@
+1.0.5 - 26-Octubre-2013
+- Se corrige los módulos de neutron y nova para colocar el
+  valor correcto del "notification_driver" para rabbitmq
+  cuando el mismo es seleccionado como message broker.
+
 1.0.4 - 22-Octubre-2013
 - Se corrige el procedimiento de inicialización de la base de
   datos del Dashboard en el módulo de instalación de Horizon.
