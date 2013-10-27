@@ -159,7 +159,8 @@ then
 		openstack-config --set /etc/cinder/cinder.conf DEFAULT notification_driver cinder.openstack.common.notifier.rpc_notifier
 		;;
 	"rabbitmq")
-		openstack-config --set /etc/cinder/cinder.conf DEFAULT notification_driver cinder.openstack.common.notifier.rabbit_notifier
+		# ATENCION: Rabbit Notifier DEPRECADO !!
+		openstack-config --set /etc/cinder/cinder.conf DEFAULT notification_driver cinder.openstack.common.notifier.rpc_notifier
 		;;
 	esac
 fi

@@ -105,12 +105,12 @@ then
         echo "CACHES = {" >> /etc/openstack-dashboard/local_settings
         echo "    'default': {" >> /etc/openstack-dashboard/local_settings
         echo "        'BACKEND': 'django.core.cache.backends.db.DatabaseCache'," >> /etc/openstack-dashboard/local_settings
+	echo "        'LOCATION': 'openstack_db_cache'," >> /etc/openstack-dashboard/local_settings
         echo "    }" >> /etc/openstack-dashboard/local_settings
         echo "}" >> /etc/openstack-dashboard/local_settings
         echo "" >> /etc/openstack-dashboard/local_settings
 	case $dbflavor in
 	"postgres")
-		# echo "SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'" >> /etc/openstack-dashboard/local_settings
 		echo "DATABASES = {" >> /etc/openstack-dashboard/local_settings
 		echo "               'default': {" >> /etc/openstack-dashboard/local_settings
 		echo "               'ENGINE': 'django.db.backends.postgresql_psycopg2'," >> /etc/openstack-dashboard/local_settings
@@ -123,7 +123,6 @@ then
 		echo "}" >> /etc/openstack-dashboard/local_settings
 		;;
 	"mysql")
-		# echo "SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'" >> /etc/openstack-dashboard/local_settings
 		echo "DATABASES = {" >> /etc/openstack-dashboard/local_settings
 		echo "               'default': {" >> /etc/openstack-dashboard/local_settings
 		echo "               'ENGINE': 'django.db.backends.mysql'," >> /etc/openstack-dashboard/local_settings
@@ -141,6 +140,8 @@ then
 	/usr/share/openstack-dashboard/manage.py createsuperuser --username=root --email=root@localhost.tld --noinput
 	mkdir -p /var/lib/dash/.blackhole
 	/usr/share/openstack-dashboard/manage.py syncdb --noinput
+	/usr/share/openstack-dashboard/manage.py createcachetable openstack_db_cache
+	/usr/share/openstack-dashboard/manage.py inspectdb
 else
 	echo "" >> /etc/openstack-dashboard/local_settings
 	echo "CACHES = {" >> /etc/openstack-dashboard/local_settings

@@ -1,3 +1,9 @@
+1.0.6 - 27-Octubre-2013
+- Se corrigen varios errores de seleccion de driver de no-
+  tificacion RPC en los módulos de nova, quantum y cinder.
+- Se agregan valores de configuración faltantes para ho-
+  rizon cuando se usa backend de base de datos.
+
 1.0.5 - 26-Octubre-2013
 - Se corrige los módulos de neutron y nova para colocar el
   valor correcto del "notification_driver" para rabbitmq
