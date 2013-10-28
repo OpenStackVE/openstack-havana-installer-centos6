@@ -106,6 +106,13 @@ openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT os_tenant_name $k
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT os_password $ceilometerpass
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT os_username $ceilometeruser
 
+openstack-config --set /etc/ceilometer/ceilometer.conf service_credentials os_username $ceilometeruser
+openstack-config --set /etc/ceilometer/ceilometer.conf service_credentials os_password $ceilometerpass
+openstack-config --set /etc/ceilometer/ceilometer.conf service_credentials os_tenant_name $keystoneservicestenant
+openstack-config --set /etc/ceilometer/ceilometer.conf service_credentials os_auth_url http://$keystonehost:5000/v2.0/
+openstack-config --set /etc/ceilometer/ceilometer.conf service_credentials os_region_name $endpointsregion
+openstack-config --set /etc/ceilometer/ceilometer.conf service_credentials os_endpoint_type publicURL
+
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT metering_api_port 8777
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT auth_strategy keystone
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT logdir /var/log/ceilometer
@@ -123,6 +130,7 @@ openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT glance_control_ex
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT neutron_control_exchange neutron
 # openstack-config --set /etc/ceilometer/ceilometer.conf publisher_rpc metering_secret $metering_secret
 openstack-config --set /etc/ceilometer/ceilometer.conf publisher_rpc metering_secret $SERVICE_TOKEN
+openstack-config --set /etc/ceilometer/ceilometer.conf publisher_rpc metering_topic metering
 
 kvm_possible=`grep -E 'svm|vmx' /proc/cpuinfo|uniq|wc -l`
 if [ $kvm_possible == "0" ]
@@ -139,6 +147,8 @@ openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT database_connecti
 # openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT metering_secret $SERVICE_TOKEN
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT log_dir /var/log/ceilometer
 openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT notification_topics notifications,glance_notifications
+openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT policy_file policy.json
+openstack-config --set /etc/ceilometer/ceilometer.conf DEFAULT policy_default_rule default
 
 case $brokerflavor in
 "qpid")

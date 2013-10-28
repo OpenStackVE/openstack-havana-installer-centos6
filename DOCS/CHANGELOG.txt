@@ -1,3 +1,9 @@
+1.0.8 - 28-Octubre-2013
+- Se agregan items de configuración faltantes en el mó-
+  dulo de instalación de Ceilometer.
+- Se cambia la secuencia de arranque de servicios de neu-
+  tron en el script openstack-control.sh
+
 1.0.6 - 27-Octubre-2013
 - Se corrigen varios errores de seleccion de driver de no-
   tificacion RPC en los módulos de nova, quantum y cinder.

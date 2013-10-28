@@ -46,22 +46,22 @@ then
 		neutron_svc_start='
 			neutron-ovs-cleanup
 			neutron-openvswitch-agent
-			neutron-dhcp-agent
-			neutron-l3-agent
-			neutron-lbaas-agent
 			neutron-metadata-agent
+			neutron-l3-agent
+			neutron-dhcp-agent
+			neutron-lbaas-agent
 			neutron-vpn-agent
 			neutron-server
 		'
 	else
 		neutron_svc_start='
-			neutron-ovs-cleanup
-			neutron-openvswitch-agent
-			neutron-dhcp-agent
-			neutron-l3-agent
-			neutron-lbaas-agent
-			neutron-metadata-agent
-			neutron-server
+                        neutron-ovs-cleanup
+                        neutron-openvswitch-agent
+                        neutron-metadata-agent
+                        neutron-l3-agent
+                        neutron-dhcp-agent
+                        neutron-lbaas-agent
+                        neutron-server
 		'
 	fi
 else

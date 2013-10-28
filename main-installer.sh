@@ -7,8 +7,8 @@
 # Primera versión para Havana (centos): Octubre 17 del 2013
 #
 # Script principal
-# Versión 1.0.6 "Mr. Cat"
-# 27 de Octubre del 2013
+# Versión 1.0.7 "Mr. Cat"
+# 28 de Octubre del 2013
 #
 
 PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
@@ -40,7 +40,7 @@ case $1 in
 	echo "Para releases 6.4 en adelante"
 	echo "Realizado por Reynaldo R. Martinez P."
 	echo "E-Mail: TigerLinux@Gmail.com"
-	echo "Versión 1.0.6 \"Mr. Cat\" - Octubre 27, 2013"
+	echo "Versión 1.0.7 \"Mr. Cat\" - Octubre 28, 2013"
 	echo ""
 	echo "Se verificaran los prerequisitos"
 	echo "Si alguno de los prerequisitos falla, se informará y se detendrá el proceso"
