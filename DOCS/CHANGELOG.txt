@@ -1,4 +1,4 @@
-1.0.8 - 28-Octubre-2013
+1.0.7 - 28-Octubre-2013
 - Se agregan items de configuración faltantes en el mó-
   dulo de instalación de Ceilometer.
 - Se cambia la secuencia de arranque de servicios de neu-
