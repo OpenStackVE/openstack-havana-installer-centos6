@@ -1,3 +1,13 @@
+1.0.8 - 30-Octubre-2013
+- Se agregan múltiples items de configuración en los mo-
+  dulos de nova y neutron.
+- Se agregan secuencias extras de arranque/reinicio para
+  los agentes de dhcp y l3 de neutron en el script de
+  administración "openstack-control.sh".
+- Se elimina "libs/sqlalchemy-migrate-0.7.2.tar.gz". Ya
+  no es necesario (incluido en los repos de RDO).
+- Se actualiza la documentación general del instalador.
+
 1.0.7 - 28-Octubre-2013
 - Se agregan items de configuración faltantes en el mó-
   dulo de instalación de Ceilometer.

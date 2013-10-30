@@ -9,9 +9,21 @@ Este instalador fue realizado para automatizar las tareas de creación de una
 infraestructura de virtualización basada en OpenStack. Hasta el momento,
 existen dos "sabores" del instalador, uno para Debian 7 y otra para Centos 6.
 
-Ambos *sabores* producen esencialmente lo mismo: Un OpenStack completamente
-utilizable para producción.
+Ambas versiones producen un OpenStack utilizable en producción, pero recomen-
+damos dado que Havana aun está muy nuevo probar muy bien antes de colocarlo
+en ambientes de producción. Si tiene dudas, use Grizzly en producción y ha-
+vana en desarrollo y haga todas las pruebas que pueda antes de colocarlo en
+ambientes de producción "real".
 
+En resumen, este instalador puede producir un OpenStack Havana completamente
+utilizable en ambientes de producción, pero aun así recomendamos seguir usando
+las versiones para grizzly (centos6/debian7) hasta que Havana madure lo sufi-
+ciente !. Recuerde que el factor "bugs" no depende de nosotros, sino del pro-
+yecto OpenStack y de los proyectos que empaquetan para centos y debian.
+
+También tome en cuenta que "hasta la fecha" (y eso podría cambiar en el futuro)
+los paquetes de Centos (provistos por el proyecto RDO de RedHat) tienden a
+actualizarse mas a menudo que los paquetes para Debian 7 en "gplhost".
 
 ## Uso del Instalador.
 
@@ -218,6 +230,11 @@ herramienta de instalación.
 El script es llamado durante la fase final de instalación para limpiar los
 logs antes de dejar el servidor instalado, pero puede ser utilizado también
 para limpiar los logs en caso de ser necesario.
+
+NOTA IMPORTANTE: Recomendamos usar el script openstack-control.sh para inicializar
+todos sus servicios de openstack !. Coloque todos los servicios en "disable" con
+"openstack-control.sh disable" y llame al script con la opción "start" desde
+el /etc/rc.local del sistema operativo !.
 
 
 ### DNSMASQ

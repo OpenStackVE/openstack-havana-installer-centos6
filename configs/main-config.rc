@@ -6,8 +6,8 @@
 # Octubre del 2013
 #
 # Archivo de configuracion principal
-# Para el instalador versión 1.0.7 "Mr. Cat"
-# Octubre 28, 2013
+# Para el instalador versión 1.0.8 "Mr. Cat"
+# Octubre 30, 2013
 #
 
 #
@@ -128,7 +128,7 @@ keystonereselleradminrole="ResellerAdmin"
 keystone_admin_rc_file="/root/keystonerc_admin"
 
 # Region para todos los endpoints
-# Ejemplo: CantvEq2
+# Ejemplo: MiSitioDeOpenStack
 endpointsregion="RegionOne"
 
 #

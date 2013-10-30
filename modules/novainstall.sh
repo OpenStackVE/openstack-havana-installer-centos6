@@ -238,6 +238,12 @@ openstack-config --set /etc/nova/nova.conf DEFAULT vnc_keymap $vnc_keymap
 openstack-config --set /etc/nova/nova.conf DEFAULT force_config_drive true
 openstack-config --set /etc/nova/nova.conf DEFAULT dhcp_domain $dhcp_domain
 
+# Mas opciones nuevas para Nova
+openstack-config --set /etc/nova/nova.conf DEFAULT linuxnet_ovs_integration_bridge $integration_bridge
+openstack-config --set /etc/nova/nova.conf DEFAULT libvirt_ovs_bridge $integration_bridge
+openstack-config --set /etc/nova/nova.conf DEFAULT neutron_ovs_bridge $integration_bridge
+openstack-config --set /etc/nova/nova.conf DEFAULT dhcp_options_enabled True
+
 case $brokerflavor in
 "qpid")
 	openstack-config --set /etc/nova/nova.conf DEFAULT rpc_backend nova.openstack.common.rpc.impl_qpid
