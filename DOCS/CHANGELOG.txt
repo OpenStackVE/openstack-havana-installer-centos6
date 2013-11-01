@@ -1,3 +1,9 @@
+1.1.0 - 01-Noviembre-2013
+- Se agrega el módulo de instalación de heat como op-
+  cional (por defecto en "no").
+- NOTA: Como esto es un feature mayor, se cambian los
+  números de versión a la serie 1.1.x.
+
 1.0.8 - 30-Octubre-2013
 - Se agregan múltiples items de configuración en los mo-
   dulos de nova y neutron.

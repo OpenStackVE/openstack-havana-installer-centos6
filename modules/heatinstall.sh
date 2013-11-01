@@ -50,7 +50,7 @@ else
 	exit 0
 fi
 
-if [ -f /etc/openstack-control-script-config/ceilometer-installed ]
+if [ -f /etc/openstack-control-script-config/heat-installed ]
 then
 	echo ""
 	echo "Este módulo ya fue ejecutado de manera exitosa - saliendo"
@@ -60,14 +60,13 @@ fi
 
 
 echo ""
-echo "Instalando paquetes para Ceilometer"
+echo "Instalando paquetes para Heat"
 
 yum install -y openstack-heat-api \
 	openstack-heat-api-cfn \
 	openstack-heat-common \
 	python-heatclient \
 	openstack-heat-engine \
-	heat-cfntools \
 	openstack-utils \
 	openstack-selinux
 
@@ -82,21 +81,69 @@ echo ""
 echo "Configurando Heat"
 echo ""
 
-openstack-config --set /etc/heat/api-paste.ini "[filter:authtoken]" paste.filter_factory "heat.common.auth_token:filter_factory"
-openstack-config --set /etc/heat/api-paste.ini "[filter:authtoken]" auth_host $keystonehost
-openstack-config --set /etc/heat/api-paste.ini "[filter:authtoken]" auth_port 35357
-openstack-config --set /etc/heat/api-paste.ini "[filter:authtoken]" auth_protocol http
-openstack-config --set /etc/heat/api-paste.ini "[filter:authtoken]" admin_tenant_name $keystoneservicestenant
-openstack-config --set /etc/heat/api-paste.ini "[filter:authtoken]" admin_user $heatuser
-openstack-config --set /etc/heat/api-paste.ini "[filter:authtoken]" admin_password $heatpass
+# Temporal - aparentemente el paquete no instala el api-paste.ini
+
+echo "# Heat api-paste.ini" >> /etc/heat/api-paste.ini 
+
+openstack-config --set /etc/heat/api-paste.ini "filter:authtoken" paste.filter_factory "heat.common.auth_token:filter_factory"
+openstack-config --set /etc/heat/api-paste.ini "filter:authtoken" auth_host $keystonehost
+openstack-config --set /etc/heat/api-paste.ini "filter:authtoken" auth_port 35357
+openstack-config --set /etc/heat/api-paste.ini "filter:authtoken" auth_protocol http
+openstack-config --set /etc/heat/api-paste.ini "filter:authtoken" admin_tenant_name $keystoneservicestenant
+openstack-config --set /etc/heat/api-paste.ini "filter:authtoken" admin_user $heatuser
+openstack-config --set /etc/heat/api-paste.ini "filter:authtoken" admin_password $heatpass
+
+echo "# Heat Main Config" >> /etc/heat/heat.conf
 
 case $dbflavor in
 "mysql")
 	openstack-config --set /etc/heat/heat.conf database connection mysql://$heatdbuser:$heatdbpass@$dbbackendhost:$mysqldbport/$heatdbname
+	openstack-config --set /etc/heat/heat.conf DEFAULT sql_connection mysql://$heatdbuser:$heatdbpass@$dbbackendhost:$mysqldbport/$heatdbname
 	;;
 "postgres")
 	openstack-config --set /etc/heat/heat.conf database connection postgresql://$heatdbuser:$heatdbpass@$dbbackendhost:$psqldbport/$heatdbname
+	openstack-config --set /etc/heat/heat.conf DEFAULT sql_connection postgresql://$heatdbuser:$heatdbpass@$dbbackendhost:$psqldbport/$heatdbname
 	;;
+esac
+
+openstack-config --set /etc/heat/heat.conf DEFAULT host $heathost
+openstack-config --set /etc/heat/heat.conf DEFAULT debug false
+openstack-config --set /etc/heat/heat.conf DEFAULT verbose false
+openstack-config --set /etc/heat/heat.conf DEFAULT log_dir /var/log/heat
+
+openstack-config --set /etc/heat/heat.conf keystone_authtoken admin_tenant_name $keystoneservicestenant
+openstack-config --set /etc/heat/heat.conf keystone_authtoken admin_user $heatuser
+openstack-config --set /etc/heat/heat.conf keystone_authtoken admin_password $heatpass
+openstack-config --set /etc/heat/heat.conf keystone_authtoken auth_host $keystonehost
+openstack-config --set /etc/heat/heat.conf keystone_authtoken auth_port 35357
+openstack-config --set /etc/heat/heat.conf keystone_authtoken auth_protocol http
+openstack-config --set /etc/heat/heat.conf keystone_authtoken auth_uri http://$keystonehost:5000/v2.0/
+openstack-config --set /etc/heat/heat.conf keystone_authtoken signing_dir /tmp/keystone-signing-heat
+
+openstack-config --set /etc/heat/heat.conf DEFAULT control_exchange openstack
+
+case $brokerflavor in
+"qpid")
+        openstack-config --set /etc/heat/heat.conf DEFAULT rpc_backend heat.openstack.common.rpc.impl_qpid
+        openstack-config --set /etc/heat/heat.conf DEFAULT qpid_reconnect_interval_min 0
+        openstack-config --set /etc/heat/heat.conf DEFAULT qpid_username $brokeruser
+        openstack-config --set /etc/heat/heat.conf DEFAULT qpid_tcp_nodelay True
+        openstack-config --set /etc/heat/heat.conf DEFAULT qpid_protocol tcp
+        openstack-config --set /etc/heat/heat.conf DEFAULT qpid_hostname $messagebrokerhost
+        openstack-config --set /etc/heat/heat.conf DEFAULT qpid_password $brokerpass
+        openstack-config --set /etc/heat/heat.conf DEFAULT qpid_port 5672
+        openstack-config --set /etc/heat/heat.conf DEFAULT qpid_topology_version 1
+        ;;
+
+"rabbitmq")
+        openstack-config --set /etc/heat/heat.conf DEFAULT rpc_backend heat.openstack.common.rpc.impl_kombu
+        openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_host $messagebrokerhost
+        openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_userid $brokeruser
+        openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_password $brokerpass
+        openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_port 5672
+        openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_use_ssl false
+        openstack-config --set /etc/heat/heat.conf DEFAULT rabbit_virtual_host $brokervhost
+        ;;
 esac
 
 echo ""

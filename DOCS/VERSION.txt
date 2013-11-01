@@ -1,5 +1,5 @@
 Version del instalador:
 
-1.0.8 "Mr. Cat"
+1.1.0 "Mr. Cat"
 
 SOLO PARA OPENSTACK HAVANA !!!

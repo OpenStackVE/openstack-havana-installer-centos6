@@ -99,19 +99,17 @@ keystoneheatcfnserviceid=`keystone service-get $heatcfnsvce|grep id|awk '{print 
 
 echo "Creando Endpoints para Heat y Heat-Cloudformation"
 
-keystone endpoint-create \
-  --region $endpointsregion \
+keystone endpoint-create --region=$endpointsregion \
   --service-id=$keystoneheatserviceid \
-  --publicurl=http://$heathost:8004/v1/\$(tenant_id)s \
-  --internalurl=http://$heathost:8004/v1/\$(tenant_id)s \
-  --adminurl=http://$heathost:8004/v1/\$(tenant_id)s
+  --publicurl="http://$heathost:8004/v1/\$(tenant_id)s" \
+  --internalurl="http://$heathost:8004/v1/\$(tenant_id)s" \
+  --adminurl="http://$heathost:8004/v1/\$(tenant_id)s"
 
-keystone endpoint-create \
-  --region $endpointsregion \
+keystone endpoint-create --region=$endpointsregion \
   --service-id=$keystoneheatcfnserviceid \
-  --publicurl=http://$heathost:8000/v1 \
-  --internalurl=http://$heathost:8000/v1 \
-  --adminurl=http://$heathost:8000/v1
+  --publicurl="http://$heathost:8000/v1" \
+  --internalurl="http://$heathost:8000/v1" \
+  --adminurl="http://$heathost:8000/v1"
 
 
 echo "Listo"

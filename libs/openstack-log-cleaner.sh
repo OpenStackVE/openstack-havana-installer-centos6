@@ -47,6 +47,7 @@ logdirs='
 	/var/log/ceilometer
 	/var/log/horizon
 	/var/log/keystone
+	/var/log/heat
 '
 
 for logdirectory in $logdirs
