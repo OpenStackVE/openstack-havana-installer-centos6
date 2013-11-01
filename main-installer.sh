@@ -7,8 +7,8 @@
 # Primera versión para Havana (centos): Octubre 17 del 2013
 #
 # Script principal
-# Versión 1.0.8 "Mr. Cat"
-# 30 de Octubre del 2013
+# Versión 1.1.0 "Mr. Cat"
+# 01 de Noviembre del 2013
 #
 
 PATH=$PATH:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
@@ -40,7 +40,7 @@ case $1 in
 	echo "Para releases 6.4 en adelante"
 	echo "Realizado por Reynaldo R. Martinez P."
 	echo "E-Mail: TigerLinux@Gmail.com"
-	echo "Versión 1.0.8 \"Mr. Cat\" - Octubre 30, 2013"
+	echo "Versión 1.1.0 \"Mr. Cat\" - Noviembre 01, 2013"
 	echo ""
 	echo "Se verificaran los prerequisitos"
 	echo "Si alguno de los prerequisitos falla, se informará y se detendrá el proceso"
@@ -298,12 +298,32 @@ case $1 in
 			echo "Ceilometer exitosamente instalado"
 		else
 			echo ""
-			echo "Falló el módulo de instalación de nova"
+			echo "Falló el módulo de instalación de ceilometer"
 			echo "Abortando el resto de la instalación"
 			echo ""
 			exit 0
 		fi
 	fi
+
+        if [ $heatinstall == "yes" ]
+        then
+                echo ""
+                echo "Instalando Heat"
+
+                ./modules/heatinstall.sh
+
+                if [ -f /etc/openstack-control-script-config/heat-installed ]
+                then
+                        echo "Heat exitosamente instalado"
+                else
+                        echo ""
+                        echo "Falló el módulo de instalación de heat"
+                        echo "Abortando el resto de la instalación"
+                        echo ""
+                        exit 0
+                fi
+        fi
+
 
 	if [ $snmpinstall == "yes" ]
 	then
