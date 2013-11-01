@@ -2,7 +2,6 @@ Pendientes:
 
 * Averiguar por que no se ven las métricas del Nova en el Panel de
   ceilometer del Dashboard (bug ??.. algo que omití ??).
-* Incluir HEAT.
 * Incluir NAGIOS (vale la pena ??.. que dice la comunidad ??).
 * Revisar las métricas de swift (no parece que todas se estén mostrando
   adecuadamente... de nuevo: bug ??.. algo que omití ??).
