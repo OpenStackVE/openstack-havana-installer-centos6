@@ -6,8 +6,8 @@
 # Octubre del 2013
 #
 # Archivo de configuracion principal
-# Para el instalador versión 1.0.8 "Mr. Cat"
-# Octubre 30, 2013
+# Para el instalador versión 1.1.0 "Mr. Cat"
+# Noviembre 01, 2013
 #
 
 #
@@ -104,6 +104,10 @@ novadbpass="P@ssw0rd"
 horizondbname="horizondb"
 horizondbuser="horizondbuser"
 horizondbpass="P@ssw0rd"
+# Heat
+heatdbname="heatdb"
+heatdbuser="heatdbuser"
+heatdbpass="P@ssw0rd"
 
 # En la siguiente seccion se definen los datos de keystone
 # Si se requiere instalar keystone, dejar keystoneinstall="yes",
@@ -386,6 +390,24 @@ mondbname="ceilometer"
 # Password del servicio de metering
 metering_secret="P@ssw0rd"
 
+
+
+# Datos de configuración para heat
+# Por defecto va en "no" a menos que lo vaya a
+# usar realmente
+heatinstall="no"
+heathost="192.168.50.10"
+heatuser="heat"
+heatsvce="heat"
+heatpass="P@ssw0rd"
+heatcfnuser="heat-cfn"
+heatcfnsvce="heat-cfn"
+heatcfnpass="P@ssw0rd"
+# Solo para la base de datos:
+# Si se van a tener varios hosts de nova, colocar aquí las IP's
+# para el acceso de la base de datos - sólo efectivo cuando el backend
+# es MySQL
+extraheathosts=""
 
 
 # Instalacion de infraestructura de monitoreo
