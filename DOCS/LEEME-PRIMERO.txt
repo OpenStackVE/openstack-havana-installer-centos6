@@ -111,17 +111,17 @@ nova_without_compute="yes"
 ```
 
 **Nodos de compute:** Para los nodos de compute, debe dejar en "yes" sólo las
-variables de instalación de los módulos de nova y quantum. El resto de los
+variables de instalación de los módulos de nova y neutron. El resto de los
 módulos (glance, cinder, horizon, etc.) deben estar en "no".  Adicionalmente,
-las siguiente variables en las secciones de nova y quantum deben estar en
+las siguiente variables en las secciones de nova y neutron deben estar en
 "yes":
 
 ```bash
 nova_in_compute_node="yes"
-quantum_in_compute_node="yes"
+neutron_in_compute_node="yes"
 ```
 
-Debe colocar las IP's de los servicios de quantum, keystone, glance y cinder
+Debe colocar las IP's de los servicios de neutron, keystone, glance y cinder
 según la que tiene el controlador (incluyendo las Ip's del backend de Base de
 Datos). En cambio, las siguientes variables deben ser colocadas a la IP del
 nodo de compute:
@@ -130,7 +130,7 @@ nodo de compute:
 novahost="IP del Nova Compute Host"
 glancehost="IP del Controlador"
 cinderhost="IP del controlador"
-quantumhost="IP del controlador"
+neutronhost="IP del controlador"
 keystonehost="IP del controlador"
 messagebrokerhost="IP del controlador"
 dbbackendhost="IP del controlador o del backend de base de datos"
@@ -240,11 +240,11 @@ el /etc/rc.local del sistema operativo !.
 ### DNSMASQ
 
 El instalador crea una configuración personalizada del componente *dnsmasq*
-usado por el agente *DHCP* de *Quantum* (`quantum-dhcp-agent`). Dicha configuración
+usado por el agente *DHCP* de *Neutron* (`neutron-dhcp-agent`). Dicha configuración
 incluye un archivo donde usted puede colocar opciones especiales:
 
 ```
-/etc/dnsmasq-quantum.d/quantum-dnsmasq-extra.conf
+/etc/dnsmasq-neutron.d/neutron-dnsmasq-extra.conf
 ```
 
 Hay ejemplos comentados en el archivo. Use esos ejemplos para pasar opciones a
@@ -274,7 +274,7 @@ serán instalados):
 * swiftinstall.sh
 * glanceinstall.sh
 * cinderinstall.sh
-* quantuminstall.sh
+* neutroninstall.sh
 * novainstall.sh
 * ceilometerinstall.sh
 * snmpinstall.sh
@@ -495,12 +495,12 @@ los scripts y sus respectivos "readmes" para entender mejor como usarlos !.
 ### Notas Finales
 
 Este instalador fue orientado inicialmente al modelo de red flat/vlan's con
-router externos donde el módulo de red (Quantum) no canalizará tráfico (sólo
+router externos donde el módulo de red (Neutron) no canalizará tráfico (sólo
 manejará los recursos de puertos de ovs y lbaas y levantará las
-configuraciones necesarias). En este modelo, quantum "no se convierte" en un
+configuraciones necesarias). En este modelo, neutron "no se convierte" en un
 posible cuello de botella para el tráfico de red. Sin embargo, usted "si tiene
 los conocimientos de configuración de openstack" puede adaptar la
 configuración y/o los módulos a sus necesidades en caso de querer utilizar el
-modelo de tunneling o cualquier otra configuración de Quantum que requiera.
+modelo de tunneling o cualquier otra configuración de Neutron que requiera.
 
 ### FIN.-
