@@ -400,9 +400,8 @@ heathost="192.168.50.10"
 heatuser="heat"
 heatsvce="heat"
 heatpass="P@ssw0rd"
-heatcfnuser="heat-cfn"
+heatemail="heat@localhost"
 heatcfnsvce="heat-cfn"
-heatcfnpass="P@ssw0rd"
 # Solo para la base de datos:
 # Si se van a tener varios hosts de nova, colocar aquí las IP's
 # para el acceso de la base de datos - sólo efectivo cuando el backend

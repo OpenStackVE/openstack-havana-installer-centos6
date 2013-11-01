@@ -197,6 +197,20 @@ then
 		sleep 5
 		sync
 
+		echo "Creando database de heat"
+		echo "CREATE DATABASE $heatdbname;"|$mysqlcommand
+		echo "GRANT ALL ON $heatdbname.* TO '$heatdbuser'@'%' IDENTIFIED BY '$heatdbpass';"|$mysqlcommand
+		echo "GRANT ALL ON $heatdbname.* TO '$heatdbuser'@'localhost' IDENTIFIED BY '$heatdbpass';"|$mysqlcommand
+		echo "GRANT ALL ON $heatdbname.* TO '$heatdbuser'@'$heathost' IDENTIFIED BY '$heatdbpass';"|$mysqlcommand
+		for extrahost in $extraheathosts
+		do
+			echo "GRANT ALL ON $heatdbname.* TO '$heatdbuser'@'$extrahost' IDENTIFIED BY '$heatdbpass';"|$mysqlcommand
+		done
+		echo "FLUSH PRIVILEGES;"|$mysqlcommand
+		sync
+		sleep 5
+		sync
+
 		echo "Creando database de horizon"
 		echo "CREATE DATABASE $horizondbname;"|$mysqlcommand
 		echo "GRANT ALL ON $horizondbname.* TO '$horizondbuser'@'%' IDENTIFIED BY '$horizondbpass';"|$mysqlcommand
@@ -274,6 +288,15 @@ then
 		echo "ALTER user $novadbuser with password '$novadbpass'"|$psqlcommand
 		echo "CREATE DATABASE $novadbname"|$psqlcommand
 		echo "GRANT ALL PRIVILEGES ON database $novadbname TO $novadbuser;"|$psqlcommand
+		sync
+		sleep 5
+		sync
+
+		echo "Creando database de heat" 
+		echo "CREATE user $heatdbuser;"|$psqlcommand
+		echo "ALTER user $heatdbuser with password '$heatdbpass'"|$psqlcommand
+		echo "CREATE DATABASE $heatdbname"|$psqlcommand
+		echo "GRANT ALL PRIVILEGES ON database $heatdbname TO $heatdbuser;"|$psqlcommand
 		sync
 		sleep 5
 		sync
