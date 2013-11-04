@@ -292,6 +292,10 @@ network_create_list="publica"
 # Nuevo para HAVANA: VPNaaS (VPN as a Service)
 # Por defecto, no lo instalamos - coloque "yes" si lo quiere instalar
 vpnaasinstall="no"
+#
+# Si se va a instalar el módulo de meetering (solo para esquemas que
+# usen routers L2 de Neutron), colocar la siguiente variable en "yes"
+neutronmetering="no"
 
 
 
@@ -389,6 +393,10 @@ mondbport="27017"
 mondbname="ceilometer"
 # Password del servicio de metering
 metering_secret="P@ssw0rd"
+#
+# Si se va a instalar el módulo de alarmas, colocar
+# la siguiente variable en "yes"
+ceilometeralarms="no"
 
 
 

@@ -83,7 +83,9 @@ echo ""
 
 # Temporal - aparentemente el paquete no instala el api-paste.ini
 
-echo "# Heat api-paste.ini" >> /etc/heat/api-paste.ini 
+cat ./libs/heat/api-paste.ini > /etc/heat/api-paste.ini
+
+chown -R heat.heat /etc/heat
 
 openstack-config --set /etc/heat/api-paste.ini "filter:authtoken" paste.filter_factory "heat.common.auth_token:filter_factory"
 openstack-config --set /etc/heat/api-paste.ini "filter:authtoken" auth_host $keystonehost
@@ -155,7 +157,10 @@ echo ""
 echo ""
 echo "Aprovisionando/inicializando BD de HEAT"
 echo ""
+
+chown -R heat.heat /var/log/heat
 heat-manage db_sync
+chown -R heat.heat /etc/heat /var/log/heat
 
 echo ""
 echo "Listo"

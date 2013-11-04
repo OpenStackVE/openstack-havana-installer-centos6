@@ -47,9 +47,15 @@ heat_svc_start='
 
 if [ -f /etc/openstack-control-script-config/neutron-full-installed ]
 then
+	if [ -f /etc/openstack-control-script-config/neutron-full-installed-metering ]
+	then
+		metering="neutron-metering-agent"
+	else
+		metering=""
+	fi
 	if [ -f /etc/openstack-control-script-config/neutron-full-installed-vpnaas ]
 	then
-		neutron_svc_start='
+		neutron_svc_start="
 			neutron-ovs-cleanup
 			neutron-openvswitch-agent
 			neutron-metadata-agent
@@ -57,18 +63,20 @@ then
 			neutron-dhcp-agent
 			neutron-lbaas-agent
 			neutron-vpn-agent
+			$metering
 			neutron-server
-		'
+		"
 	else
-		neutron_svc_start='
+		neutron_svc_start="
                         neutron-ovs-cleanup
                         neutron-openvswitch-agent
                         neutron-metadata-agent
                         neutron-l3-agent
                         neutron-dhcp-agent
                         neutron-lbaas-agent
+			$metering
                         neutron-server
-		'
+		"
 	fi
 else
 	neutron_svc_start='
