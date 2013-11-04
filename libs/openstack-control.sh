@@ -114,12 +114,23 @@ else
 	'
 fi
 
-ceilometer_svc_start='
+if [ -f /etc/openstack-control-script-config/ceilometer-installed-alarms ]
+then
+	alarm1="openstack-ceilometer-alarm-notifier"
+	alarm2="openstack-ceilometer-alarm-evaluator"
+else
+	alarm1=""
+	alarm2=""
+fi
+
+ceilometer_svc_start="
 	openstack-ceilometer-compute
 	openstack-ceilometer-central
 	openstack-ceilometer-api
 	openstack-ceilometer-collector
-'
+	$alarm1
+	$alarm2
+"
 
 
 

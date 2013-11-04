@@ -73,6 +73,11 @@ yum install -y openstack-ceilometer-api \
 	openstack-utils \
 	openstack-selinux
 
+if [ $ceilometeralarms == "yes" ]
+then
+	yum install -y openstack-ceilometer-alarm
+fi
+
 echo "Listo"
 echo ""
 
@@ -201,20 +206,19 @@ chkconfig openstack-ceilometer-api on
 service openstack-ceilometer-collector start
 chkconfig openstack-ceilometer-collector on
 
+if [ $ceilometeralarms == "yes" ]
+then
+	service openstack-ceilometer-alarm-notifier start
+	chkconfig openstack-ceilometer-alarm-notifier on
+
+	service openstack-ceilometer-alarm-evaluator start
+	chkconfig openstack-ceilometer-alarm-evaluator on
+fi
+
 echo "Dormiré por 10 segundos y reiniciaré el servicio de collector de datos"
 sync
 sleep 10
 sync
-
-# Nota: Esto no es paranoia... a veces la primera vez que arranca el collector,
-# el servicio se cae. Por si acaso, lo bajamos, esperamos 5 segundos, y lo subimos
-# de nuevo
-
-service openstack-ceilometer-collector stop
-sync
-sleep 5
-sync
-service openstack-ceilometer-collector start
 
 testceilometer=`rpm -qi openstack-ceilometer-compute|grep -ci "is not installed"`
 if [ $testceilometer == "1" ]
@@ -226,6 +230,10 @@ then
 else
 	date > /etc/openstack-control-script-config/ceilometer-installed
 	date > /etc/openstack-control-script-config/ceilometer
+	if [ $ceilometeralarms == "yes" ]
+	then
+		date > /etc/openstack-control-script-config/ceilometer-installed-alarms
+	fi
 fi
 
 
