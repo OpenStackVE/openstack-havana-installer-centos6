@@ -1,3 +1,11 @@
+1.1.1 - 04-Noviembre-2013
+- Se agrega como opción la instalación del bandwidth
+  monitoring en Neutron (metering-agent).
+- Se agrega como opción la instalación del soporte de
+  manejo de alertas en Ceilometer.
+- Correcciones y mejoras menores en módulo de instala-
+  ción de Heat.
+
 1.1.0 - 01-Noviembre-2013
 - Se agrega el módulo de instalación de heat como op-
   cional (por defecto en "no").

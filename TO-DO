@@ -1,11 +1,6 @@
 Pendientes:
 
-* Averiguar por que no se ven las métricas del Nova en el Panel de
-  ceilometer del Dashboard (bug ??.. algo que omití ??).
 * Incluir NAGIOS (vale la pena ??.. que dice la comunidad ??).
-* Revisar las métricas de swift (no parece que todas se estén mostrando
-  adecuadamente... de nuevo: bug ??.. algo que omití ??).
 * Considerar a futuro incluir un portal de automonitoreo vía MRTG con
   autenticación http (htpasswd).
-* Incluir el bandwidth meetering de ceilometer.
 * Incluir la opción de colocar todos los servicios sobre SSL.

@@ -182,10 +182,6 @@ case $brokerflavor in
 esac
 
 
-#
-# Esto no sabemos si todavía funciona - esperando por confirmación
-# grep -v format_string /etc/nova/nova.conf > /etc/ceilometer-collector.conf
-
 echo ""
 echo "Aplicando reglas de IPTABLES"
 
@@ -215,9 +211,8 @@ then
 	chkconfig openstack-ceilometer-alarm-evaluator on
 fi
 
-echo "Dormiré por 10 segundos y reiniciaré el servicio de collector de datos"
 sync
-sleep 10
+sleep 2
 sync
 
 testceilometer=`rpm -qi openstack-ceilometer-compute|grep -ci "is not installed"`
