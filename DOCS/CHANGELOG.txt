@@ -1,3 +1,8 @@
+1.1.2 - 23-Diciembre-2013
+- Se modifica la detección del tipo de kernel en el
+  módulo de prerequisitos.
+- Se agregan opciones extras para el Config Drive.
+
 1.1.1 - 04-Noviembre-2013
 - Se agrega como opción la instalación del bandwidth
   monitoring en Neutron (metering-agent).

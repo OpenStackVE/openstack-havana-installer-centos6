@@ -34,7 +34,7 @@ amiroot=` whoami|grep root|wc -l`
 amiarhel6=`cat /etc/redhat-release |grep 6.|wc -l`
 internalbridgeinterface=`ifconfig $integration_bridge|grep -c $integration_bridge`
 internalbridgepresent=`ovs-vsctl show|grep -i -c bridge.\*$integration_bridge`
-oskernelinstalled=`uname -r|grep -c openstack.\*x86_64`
+oskernelinstalled=`uname -r|grep -c x86_64`
 
 	
 echo "Instalando paquetes iniciales"

@@ -236,6 +236,10 @@ openstack-config --set /etc/nova/nova.conf DEFAULT novncproxy_port 6080
 openstack-config --set /etc/nova/nova.conf DEFAULT vncserver_listen $novahost
 openstack-config --set /etc/nova/nova.conf DEFAULT vnc_keymap $vnc_keymap
 openstack-config --set /etc/nova/nova.conf DEFAULT force_config_drive true
+openstack-config --set /etc/nova/nova.conf DEFAULT config_drive_format iso9660
+openstack-config --set /etc/nova/nova.conf DEFAULT config_drive_cdrom true
+openstack-config --set /etc/nova/nova.conf DEFAULT config_drive_inject_password True
+openstack-config --set /etc/nova/nova.conf DEFAULT mkisofs_cmd genisoimage
 openstack-config --set /etc/nova/nova.conf DEFAULT dhcp_domain $dhcp_domain
 
 # Mas opciones nuevas para Nova
