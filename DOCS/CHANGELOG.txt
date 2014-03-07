@@ -1,3 +1,7 @@
+1.1.3 - 07-Marzo-2014
+- Se agregan "Goodies" extras para lectura de metadata
+  y monitoreo vía ZABBIX.
+
 1.1.2 - 23-Diciembre-2013
 - Se modifica la detección del tipo de kernel en el
   módulo de prerequisitos.
